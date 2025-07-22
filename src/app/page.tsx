@@ -1,10 +1,12 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, MapPin, Smartphone, Zap, Shield, Users, Trophy, ArrowRight, CheckCircle, Star } from 'lucide-react';
+import { ChevronDown, MapPin, Smartphone, Zap, Shield, Users, Trophy, ArrowRight, CheckCircle, Star, Mail } from 'lucide-react';
 
 const PopLandingPage = () => {
   const [scrollY, setScrollY] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [email, setEmail] = useState('');
+  const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -18,6 +20,26 @@ const PopLandingPage = () => {
     }, 4000);
     return () => clearInterval(interval);
   }, []);
+
+  // X.com (Twitter) Logo Component
+  const XLogo: React.FC<{ className?: string }> = ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+  );
+
+  const handleEmailSubmit = (e: any) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setIsEmailSubmitted(true);
+      // Here you would integrate with your backend API
+      console.log('Email submitted:', email);
+      setTimeout(() => {
+        setIsEmailSubmitted(false);
+        setEmail('');
+      }, 3000);
+    }
+  };
 
   const testimonials = [
     { name: "Alex Chen", role: "DevCon Attendee", text: "Got my NFT instantly after the keynote. PoP made networking so much easier!" },
@@ -72,6 +94,9 @@ const PopLandingPage = () => {
             <a href="#features" className="hover:text-purple-300 transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-purple-300 transition-colors">How it Works</a>
             <a href="#testimonials" className="hover:text-purple-300 transition-colors">Testimonials</a>
+            <a href="https://x.com/proofofpresence" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors">
+              <XLogo className="w-5 h-5" />
+            </a>
             <button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
               Get Started
             </button>
@@ -96,7 +121,7 @@ const PopLandingPage = () => {
               gasless attendance rewards powered by Solana.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center space-x-2">
                 <span>Start Collecting</span>
                 <ArrowRight className="w-5 h-5" />
@@ -104,6 +129,58 @@ const PopLandingPage = () => {
               <button className="border-2 border-white/30 hover:border-white/50 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 backdrop-blur-sm hover:bg-white/10">
                 Watch Demo
               </button>
+            </div>
+
+            {/* Social Links - Top Section */}
+            <div className="flex justify-center items-center space-x-6 mb-8">
+              <span className="text-gray-300">Follow us for updates:</span>
+              <a 
+                href="https://x.com/PoPCheckIn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 transform hover:scale-110 border border-white/20 group"
+              >
+                <XLogo className="w-6 h-6 text-white group-hover:text-purple-300 transition-colors duration-300" />
+              </a>
+            </div>
+
+            {/* Email Signup */}
+            <div className="max-w-md mx-auto mb-12">
+              <div className="text-center mb-4">
+                <p className="text-gray-300">🚀 Get early access and exclusive NFT drops</p>
+              </div>
+              <form onSubmit={handleEmailSubmit} className="relative">
+                <div className="flex gap-2">
+                  <div className="flex-1 relative">
+                    <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email address"
+                      className="w-full pl-12 pr-4 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isEmailSubmitted}
+                    className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 disabled:from-green-500 disabled:to-green-600 rounded-full text-white font-semibold transition-all duration-300 transform hover:scale-105 disabled:scale-100 whitespace-nowrap flex items-center space-x-2"
+                  >
+                    {isEmailSubmitted ? (
+                      <>
+                        <CheckCircle className="w-5 h-5" />
+                        <span>Joined!</span>
+                      </>
+                    ) : (
+                      <span>Join Waitlist</span>
+                    )}
+                  </button>
+                </div>
+              </form>
+              <p className="text-xs text-gray-400 text-center mt-3">
+                Be the first to know when PoP launches. No spam, just NFT magic! ✨
+              </p>
             </div>
 
             {/* Stats */}
@@ -286,7 +363,7 @@ const PopLandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 px-6 py-12 border-t border-white/10">
+      <footer className="relative z-50 px-6 py-12 border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
