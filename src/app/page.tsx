@@ -28,16 +28,31 @@ const PopLandingPage = () => {
     </svg>
   );
 
-  const handleEmailSubmit = (e: any) => {
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
-      setIsEmailSubmitted(true);
-      // Here you would integrate with your backend API
-      console.log('Email submitted:', email);
-      setTimeout(() => {
-        setIsEmailSubmitted(false);
-        setEmail('');
-      }, 3000);
+    if (!email.trim()) return;
+
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_WEBAPP_URL!, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({ email }),
+      });
+
+      if (response.ok) {
+        setIsEmailSubmitted(true);
+        console.log("Email submitted:", email);
+        setTimeout(() => {
+          setIsEmailSubmitted(false);
+          setEmail("");
+        }, 1000);
+      } else {
+        console.error("Submission failed");
+      }
+    } catch (error) {
+      console.error("Error submitting email:", error);
     }
   };
 
@@ -165,7 +180,7 @@ const PopLandingPage = () => {
                   <button
                     type="submit"
                     disabled={isEmailSubmitted}
-                    className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 disabled:from-green-500 disabled:to-green-600 rounded-full text-white font-semibold transition-all duration-300 transform hover:scale-105 disabled:scale-100 whitespace-nowrap flex items-center space-x-2"
+                    className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 disabled:from-green-500 disabled:to-green-600 rounded-full text-white font-semibold transition-all duration-300 transform hover:scale-105 disabled:scale-100 whitespace-nowrap flex items-center space-x-2 cursor-pointer"
                   >
                     {isEmailSubmitted ? (
                       <>
