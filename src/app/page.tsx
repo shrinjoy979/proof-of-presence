@@ -109,7 +109,7 @@ const PopLandingPage = () => {
             <a href="#features" className="hover:text-purple-300 transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-purple-300 transition-colors">How it Works</a>
             <a href="#testimonials" className="hover:text-purple-300 transition-colors">Testimonials</a>
-            <a href="https://x.com/proofofpresence" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors">
+            <a href="https://x.com/PoPCheckIn" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 transition-colors">
               <XLogo className="w-5 h-5" />
             </a>
             <button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
