@@ -11,8 +11,7 @@ Wallet signs a transaction
 A Proof NFT or on-chain record is minted on Solana
 User gets verifiable proof of attendance forever
 
-**High-Level Architecture**
-1️⃣ **Frontend (React)**
+**Frontend (React)**
 Wallet connection (Phantom / Backpack)
 Location access (Browser Geolocation API)
 Bluetooth (Web Bluetooth API)
@@ -21,7 +20,7 @@ Event QR fallback option
 Transaction signing
 NFT display dashboard
 
-2️⃣ **Backend (Node.js)**
+**Backend (Node.js)**
 Event creation APIs
 Event validation logic
 Proximity verification logic
@@ -29,16 +28,16 @@ Rate limiting & anti-spam protection
 Solana transaction building
 Optional metadata storage (IPFS/Arweave)
 
-3️⃣ **Solana Program (On-chain Logic)**
+**Solana Program (On-chain Logic)**
 You should create:
 
-🗂 **Accounts**
+**Accounts**
 Event PDA
 Attendance PDA
 Verifier PDA
 Optional: NFT Mint account
 
-🎯 **Instructions**
+**Instructions**
 create_event
 verify_presence
 mint_proof_nft
